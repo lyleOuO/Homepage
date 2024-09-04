@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - 页面未找到</title>
+    <style>
+        :root {
+            --text-hover-color: #409eff;
+            --bg-color: #fff;
+            --text-color: #2b2a2a; /* 命令的颜色 */
+            --title-color: #09b70c; /* prompt 的颜色 */
+            --link-color: #105561; /* 输出的颜色 */
+            --tip-color: red;
+        }
+
+        /* Dark mode styles */
+        html.dark {
+            --bg-color: #000;
+            --text-color: #e4e2e2;
+            --title-color: #44d646;
+            --link-color: #27acc4;
+        }
+
+        /* Selection styles */
+        ::selection {
+            background: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        @font-face {
+            font-family: 'codeFont';
+            src: url('static/font/LXGWWenKaiLite-Regular.ttf') format('truetype');
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow: hidden;
+            font-family: consolas, 'codeFont';
+            cursor: url('https://zxecsm.github.io/img/normal.cur'), auto; /* 自定义光标 */
+        }
+
+        #box {
+            width: 95%;
+            max-width: 800px;
+            padding: 20px;
+            line-height: 1.4;
+            box-sizing: border-box;
+            overflow-y: auto;
+            text-align: left;
+            background-color: var(--bg-color);
+            border-radius: 10px; /* 圆角边框 */
+        }
+
+        .prompt {
+            color: var(--title-color); /* prompt 的颜色 */
+            margin: 0;
+        }
+
+        .command {
+            color: var(--text-color); /* 命令的颜色 */
+        }
+
+        .output {
+            color: var(--link-color); /* 输出的颜色 */
+        }
+
+        .input {
+            color: var(--text-color);
+            border: none;
+            background: none;
+            outline: none;
+            width: auto; /* 适应内容宽度 */
+            font-size: 16px;
+            padding: 10px 0; /* 内边距 */
+            display: inline-block; /* 与 prompt 同行 */
+        }
+
+        .tip {
+            color: var(--tip-color);
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div id="terminal">
+            <p class="tip">Error, the server cannot provide messages normally</p>
+            <p class="tip">404 - 页面未找到。输入 'help' 获取帮助。</p>
+        </div>
+        <p class="prompt">user@linux:~$</p>
+        <input id="commandInput" class="input" autofocus placeholder="输入命令..." />
+    </div>
+    <script>
+        const terminal = document.getElementById('terminal');
+        const commandInput = document.getElementById('commandInput');
+
+        // 命令和响应
+        const commands = {
+            help: `
+                <div class="output">
+                    <p>以下是可用命令列表：</p>
+                    <p>help - 显示此帮助信息。</p>
+                    <p>home - 返回主页。</p>
+                    <p>如果您有其他问题，请尝试联系支持或访问 <a href="https://www.baidu.com" target="_blank">www.baidu.com</a>.</p>
+                </div>
+            `,
+            home: `
+                <div class="output">
+                    <p>正在返回主页...</p>
+                </div>
+            `,
+        };
+
+        commandInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                const command = commandInput.value.trim();
+                if (command) {
+                    terminal.innerHTML += `<p class="prompt">user@linux:~$ <span class="command">${command}</span></p>`;
+                    if (commands[command]) {
+                        terminal.innerHTML += commands[command];
+                        if (command === 'home') {
+                            setTimeout(() => {
+                                window.location.href = 'index.html'; // 替换为主页的实际路径
+                            }, 1000);
+                        }
+                    } else {
+                        terminal.innerHTML += `<p class="output">bash: ${command}: 未找到命令</p>`;
+                    }
+                    commandInput.value = '';
+                    terminal.scrollTop = terminal.scrollHeight; // 滚动到底部
+                }
+            }
+        });
+    </script>
+</body>
+</html>
