@@ -1,1 +1,1 @@
-# 静态导航页 for [ERxhao.github.io](https://github.com/K1314047)
+# 静态导航页 for [zxecsm.github.io](https://zxecsm.github.io/)

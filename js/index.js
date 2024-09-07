@@ -14,6 +14,7 @@ if (HASH == 'setting') {
 } else {
   renderHome(data, 1, !inputEffect);
 }
+
 // 渲染主页
 async function renderHome(data, hasEndWord, immediate) {
   isEnd = false;
@@ -82,7 +83,7 @@ async function renderCmd(cmd, immediate) {
       fra.appendChild(createCmd(cmd[i]));
     } else {
       await spaceTime(() => {
-        playSound('/img/key.mp3');
+        playSound('image/key.mp3');
         const ntb = isNeedToBottom();
         addToBox(createCmd(cmd[i]));
         if (ntb) {
@@ -104,7 +105,7 @@ function renderRes(res, immediate) {
     return fra;
   }
   return spaceTime(() => {
-    playSound('/img/enter.mp3');
+    playSound('image/enter.mp3');
     const ntb = isNeedToBottom();
     addToBox(fra);
     if (ntb) {
@@ -156,6 +157,19 @@ function createRes(res) {
       // 日期
       oDiv = createDefault(type, getTime(), (oDiv) => {
         oDiv.classList.add('dateinfo');
+      });
+    } else if (type === 'ip') {
+      // 获取IP地址并显示
+      oDiv = createDefault('ip', '获取IP地址中...', (oDiv) => {
+        // 使用API获取IP地址
+        fetch('https://api.ipify.org?format=json')
+          .then(response => response.json())
+          .then(data => {
+            oDiv.innerText = 'IP 地址: ' + data.ip;
+          })
+          .catch(() => {
+            oDiv.innerText = '127.0.0.1';
+          });
       });
     } else if (type === 'dark') {
       // 黑暗模式
@@ -255,7 +269,7 @@ function createLink(obj, cb) {
         logoEl.style.backgroundImage = `url(${url})`;
       })
       .catch(() => {
-        logoEl.style.backgroundImage = `url('../img/default-icon.png')`;
+        logoEl.style.backgroundImage = `url('image/default.svg')`;
       });
   }
   const oSpan = createEl('span');
@@ -381,11 +395,11 @@ document.addEventListener('visibilitychange', function () {
   const icon = document.querySelector("link[rel*='icon']");
   // 页面变为不可见时触发
   if (document.visibilityState == 'hidden') {
-    icon.href = '/img/icon.svg';
+    icon.href = 'image/favicon-hidden.ico';
   }
   // 页面变为可见时触发
   if (document.visibilityState == 'visible') {
-    icon.href = '/img/icon1.svg';
+    icon.href = 'favicon.ico';
   }
 });
 // 获取时间字符串

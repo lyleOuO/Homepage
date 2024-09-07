@@ -1,37 +1,32 @@
 :root {
-  --text-hover-color: #409eff;
+  --text-hover-color: #409eff; /* 链接悬停颜色 */
 }
+
 html {
-  --bg-color: #fff;
-  --text-color: #2b2a2a;
-  --title-color: #09b70c;
-  --link-color: #105561;
-  --res-color: #c74c0f;
+  --bg-color: #fff; /* 背景色 */
+  --text-color: #2b2a2a; /* 文字颜色 */
+  --title-color: #09b70c; /* 标题颜色 */
+  --link-color: #105561; /* 链接颜色 */
+  --res-color: #c74c0f; /* 资源颜色 */
 }
+
 html.dark {
-  --bg-color: #000;
-  --text-color: #e4e2e2;
-  --title-color: #44d646;
-  --link-color: #27acc4;
-  --res-color: #c9815d;
+  --bg-color: #000; /* 深色模式背景色 */
+  --text-color: #e4e2e2; /* 深色模式文字颜色 */
+  --title-color: #44d646; /* 深色模式标题颜色 */
+  --link-color: #27acc4; /* 深色模式链接颜色 */
+  --res-color: #c9815d; /* 深色模式资源颜色 */
 }
-/* 选中背景和字体颜色 */
-::selection {
-  background: var(--text-color);
-  color: var(--bg-color);
-}
-::-moz-selection {
-  background: var(--text-color);
-  color: var(--bg-color);
-}
+
+/* 选中文本的背景和字体颜色 */
+::selection,
+::-moz-selection,
 ::-webkit-selection {
   background: var(--text-color);
   color: var(--bg-color);
 }
-@font-face {
-  font-family: 'codeFont';
-  src: url('../font/LXGWWenKaiLite-Regular.ttf') format('truetype');
-}
+
+/* 全局样式 */
 html,
 body {
   width: 100%;
@@ -41,17 +36,29 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 18px;
-  background-color: var(--bg-color);
-  color: var(--text-color);
+  font-size: 18px; /* 字体大小 */
+  background-color: var(--bg-color); /* 背景色 */
+  color: var(--text-color); /* 文字颜色 */
   overflow: hidden;
+  font-family: 'LXGWWenKai', sans-serif; /* 默认字体 */
 }
+
+/* 代码块和内联代码的字体样式 */
+pre, code {
+  font-family: 'LXGWWenKaiMono', monospace;
+}
+
+/* 自定义光标 */
 body {
-  cursor: url('https://zxecsm.github.io/img/normal.cur'), default;
+  cursor: url('../image/normal.cur'), default;
 }
+
+/* 全局文本阴影效果 */
 * {
   text-shadow: 0 0 #888;
 }
+
+/* 主内容框 */
 #box {
   width: 95%;
   min-height: 70%;
@@ -59,19 +66,24 @@ body {
   max-width: 800px;
   padding: 10px;
   line-height: 30px;
-  font-family: consolas, 'codeFont';
   box-sizing: border-box;
   word-break: break-all;
   overflow-y: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  scrollbar-width: none; /* 隐藏滚动条 */
+  -ms-overflow-style: none; /* 隐藏滚动条 */
 }
+
+/* 隐藏自定义滚动条 */
 #box::-webkit-scrollbar {
   display: none;
 }
+
+/* 资源框样式 */
 #box .res_box {
   overflow: hidden;
 }
+
+/* 资源项样式 */
 #box .res_box .res {
   clear: both;
   display: flex;
@@ -79,10 +91,14 @@ body {
   margin-right: 10px;
   color: var(--res-color);
 }
+
+/* 链接资源项样式 */
 #box .res_box .res.link {
   clear: none;
   float: left;
 }
+
+/* 资源项的 logo 图片样式 */
 #box .res_box .res .logo {
   width: 30px;
   height: 30px;
@@ -91,42 +107,49 @@ body {
   background-position: center;
   background-image: url(../image/loading.svg);
 }
+
+/* 链接样式 */
 #box .res_box .res span.cursor {
   color: var(--link-color);
-  cursor: url('https://zxecsm.github.io/img/link.cur'), pointer;
+  cursor: url('../image/link.cur'), pointer;
   text-decoration: underline;
 }
+
+/* 链接悬停效果 */
 #box .res_box .res span.cursor:hover {
   color: var(--text-hover-color);
   text-decoration: underline wavy;
 }
+
+/* 输入框样式 */
 #box .enter {
   background-color: var(--text-color);
   color: transparent;
   pointer-events: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
   text-shadow: none;
 }
+
+/* 输入框激活效果 */
 #box .enter::before {
   content: 'H';
 }
+
 #box .enter.active {
   animation: glint 1s infinite;
 }
+
+/* 标题样式 */
 #box .title {
   color: var(--title-color);
 }
+
+/* 闪光动画 */
 @keyframes glint {
-  0% {
+  0%, 100% {
     background-color: var(--text-color);
   }
   50% {
     background-color: transparent;
-  }
-  100% {
-    background-color: var(--text-color);
   }
 }
